@@ -26,3 +26,7 @@ class Order(models.Model):
     investor = ForeignKey(Investor, on_delete=models.CASCADE)
     datetime = models.DateTimeField(auto_now_add=True)
     value = models.FloatField(editable=False)
+
+    def save(self, *args, **kwargs):
+        self.value = self.asset.price * self.quantity
+        super().save(*args, **kwargs)
