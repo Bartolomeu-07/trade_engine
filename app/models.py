@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import ForeignKey
 
 
 class AssetType(models.Model):
@@ -16,3 +17,11 @@ class Investor(AbstractUser):
     balance = models.FloatField()
     holdings = models.ManyToManyField(Asset, related_name='investors')
     is_admin = models.BooleanField(default=False)
+
+
+class Order(models.Model):
+    id = models.AutoField(primary_key=True)
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    investor = ForeignKey(Investor, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(auto_now_add=True)
