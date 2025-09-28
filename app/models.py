@@ -25,3 +25,4 @@ class Order(models.Model):
     quantity = models.IntegerField()
     investor = ForeignKey(Investor, on_delete=models.CASCADE)
     datetime = models.DateTimeField(auto_now_add=True)
+    value = models.FloatField(editable=False)
