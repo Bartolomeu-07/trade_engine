@@ -17,6 +17,12 @@ class AssetListView(generic.ListView):
     fields = "__all__"
 
 
+class AssetDetailView(generic.DetailView):
+    model = Asset
+    template_name = "app/asset_detail.html"
+    context_object_name = "asset"
+
+
 class InvestorListView(generic.ListView):
     model = Investor
     template_name = "app/investor_list.html"
