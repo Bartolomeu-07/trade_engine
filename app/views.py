@@ -1,6 +1,6 @@
 from django.views import generic
 
-from app.models import AssetType, Asset, Investor
+from app.models import AssetType, Asset, Investor, Order
 
 
 class AssetTypeListView(generic.ListView):
@@ -22,3 +22,10 @@ class InvestorListView(generic.ListView):
     template_name = "app/investor_list.html"
     context_object_name = "investors"
     fields = ["username", "balance", "holdings"]
+
+
+class OrderListView(generic.ListView):
+    model = Order
+    template_name = "order_list.html"
+    context_object_name = "orders"
+    fields = "__all__"
