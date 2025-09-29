@@ -17,7 +17,7 @@ class Asset(models.Model):
 
 
 class Investor(AbstractUser):
-    balance = models.FloatField()
+    balance = models.FloatField(default=100000)
     holdings = models.ManyToManyField(Asset, related_name='investors')
 
 
