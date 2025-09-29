@@ -19,7 +19,6 @@ class Asset(models.Model):
 class Investor(AbstractUser):
     balance = models.FloatField()
     holdings = models.ManyToManyField(Asset, related_name='investors')
-    is_admin = models.BooleanField(default=False)
 
 
 class Order(models.Model):
