@@ -1,9 +1,11 @@
 from django.urls import path
 
 from app.views import AssetTypeListView, AssetListView, InvestorListView, OrderListView, AssetDetailView, \
-    AssetCreateView, AssetUpdateView, AssetDeleteView
+    AssetCreateView, AssetUpdateView, AssetDeleteView, IndexView
 
 urlpatterns = [
+    path("", IndexView.as_view(), name="index"),
+
     # ASSET TYPE
     path("assettypes/", AssetTypeListView.as_view(), name="asset-type-list"),
 

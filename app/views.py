@@ -1,8 +1,13 @@
 from django.urls import reverse_lazy, reverse
 from django.views import generic
+from django.views.generic import TemplateView
 
 from app.forms import AssetForm
 from app.models import AssetType, Asset, Investor, Order
+
+
+class IndexView(TemplateView):
+    template_name = "app/index.html"
 
 
 class AssetTypeListView(generic.ListView):
