@@ -41,6 +41,11 @@ class AssetUpdateView(generic.UpdateView):
         return reverse("app:asset-detail", kwargs={"pk": self.object.pk})
 
 
+class AssetDeleteView(generic.DeleteView):
+    model = Asset
+    success_url = reverse_lazy("app:asset-list")
+
+
 class InvestorListView(generic.ListView):
     model = Investor
     template_name = "app/investor_list.html"
