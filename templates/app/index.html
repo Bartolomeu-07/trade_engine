@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Home - Trade Engine{% endblock %}
+
+{% block content %}
+<!-- Hero section with background image -->
+<header class="min-vh-50 d-flex align-items-center position-relative"
+        style="background-image: url('{% static "assets/img/background.png" %}');
+               background-size: cover;
+               background-position: center;
+               height: 500px;
+               overflow: hidden;">
+  <!-- overlay tylko w obrębie headera -->
+  <span class="mask bg-gradient-dark opacity-6 position-absolute start-0 top-0 w-100 h-100"></span>
+
+  <!-- treść na wierzchu -->
+  <div class="container text-center text-white position-relative" style="z-index: 1;">
+    <h1 class="display-3 fw-bold text-white">Welcome to Trade Engine</h1>
+    <p class="lead mb-4">Buy, sell and manage assets with ease.</p>
+    <a href="{% url 'app:asset-list' %}" class="btn btn-primary btn-lg">Browse Assets</a>
+  </div>
+</header>
+
+<!-- Content section -->
+<section class="container py-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Assets</h5>
+          <p class="card-text">View and manage all available assets in the market.</p>
+          <a href="{% url 'app:asset-list' %}" class="btn btn-outline-primary">Go to Assets</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Investors</h5>
+          <p class="card-text">Check investors, their balances and holdings.</p>
+          <a href="{% url 'app:investor-list' %}" class="btn btn-outline-primary">Go to Investors</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Orders</h5>
+          <p class="card-text">Browse all orders placed on the platform.</p>
+          <a href="{% url 'app:order-list' %}" class="btn btn-outline-primary">Go to Orders</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
