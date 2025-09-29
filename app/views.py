@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.views import generic
 
+from app.forms import AssetForm
 from app.models import AssetType, Asset, Investor, Order
 
 
@@ -26,8 +27,9 @@ class AssetDetailView(generic.DetailView):
 
 class AssetCreateView(generic.CreateView):
     model = Asset
-    success_url = reverse_lazy("asset-list")
-    fields = "__all__"
+    form_class = AssetForm
+    template_name = "app/asset_form.html"
+    success_url = reverse_lazy("app:asset-list")
 
 
 class InvestorListView(generic.ListView):
