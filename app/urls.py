@@ -13,7 +13,7 @@ urlpatterns = [
     path("investors/", InvestorListView.as_view(), name="investor-list"),
 
     # ORDER
-    path("orders", OrderListView.as_View(), name="order-list"),
+    path("orders", OrderListView.as_view(), name="order-list"),
 ]
 
 app_name = "app"
