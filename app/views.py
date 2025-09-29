@@ -43,6 +43,7 @@ class AssetUpdateView(generic.UpdateView):
 
 class AssetDeleteView(generic.DeleteView):
     model = Asset
+    template_name = "app/asset_delete.html"
     success_url = reverse_lazy("app:asset-list")
 
 
