@@ -14,7 +14,7 @@
         <tbody>
           {% for t in assettypes %}
           <tr>
-            <td>{{ forloop.counter }}</td>
+            <td>{{ t.id }}</td>
             <td>{{ t.name }}</td>
           </tr>
           {% empty %}
