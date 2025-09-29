@@ -23,7 +23,7 @@
         </thead>
         <tbody>
           {% for asset in assets %}
-          <tr>
+          <tr onclick="window.location='{% url 'app:asset-detail' asset.id %}'" style="cursor: pointer;">
             <td>{{ asset.id }}</td>
             <td>{{ asset.name }}</td>
             <td>{{ asset.price|floatformat:3 }}</td>
