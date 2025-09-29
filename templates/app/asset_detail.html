@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layouts/base.html" %}
+{% block title %}Asset: {{ asset.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">Asset Details</h5>
+    </div>
+    <div class="card-body">
+      <div class="row gy-3">
+        <div class="col-12 col-md-4">
+          <div class="d-flex flex-column">
+            <span class="text-muted">Name</span>
+            <span class="fw-bold">{{ asset.name }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="d-flex flex-column">
+            <span class="text-muted">Price</span>
+            <span class="fw-bold">{{ asset.price|floatformat:2 }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="d-flex flex-column">
+            <span class="text-muted">Type</span>
+            <span class="fw-bold">
+              {{ asset.type.name|default:asset.type }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
