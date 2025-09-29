@@ -1,4 +1,4 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from app.forms import AssetForm
@@ -30,6 +30,15 @@ class AssetCreateView(generic.CreateView):
     form_class = AssetForm
     template_name = "app/asset_form.html"
     success_url = reverse_lazy("app:asset-list")
+
+
+class AssetUpdateView(generic.UpdateView):
+    model = Asset
+    form_class = AssetForm
+    template_name = "app/asset_form.html"
+
+    def get_success_url(self):
+        return reverse("app:asset-detail", kwargs={"pk": self.object.pk})
 
 
 class InvestorListView(generic.ListView):
