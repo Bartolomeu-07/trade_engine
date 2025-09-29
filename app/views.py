@@ -1,6 +1,6 @@
 from django.views import generic
 
-from app.models import AssetType
+from app.models import AssetType, Asset
 
 
 class AssetTypeListView(generic.ListView):
@@ -11,7 +11,7 @@ class AssetTypeListView(generic.ListView):
 
 
 class AssetListView(generic.ListView):
-    model = AssetType
+    model = Asset
     template_name = "app/asset_list.html"
     context_object_name = "assets"
     fields = "__all__"
