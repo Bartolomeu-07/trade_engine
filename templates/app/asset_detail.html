@@ -7,8 +7,8 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0">Asset Details</h5>
       <div>
-        <a href="{% url 'app:asset-update' %}" class="btn btn-dark btn-sm me-2">Update</a>
-        <a href="{% url 'app:asset-delete' %}" class="btn btn-danger btn-sm">Delete</a>
+        <a href="{% url 'app:asset-update' pk=asset.id %}" class="btn btn-dark btn-sm me-2">Update</a>
+        <a href="{% url 'app:asset-delete' pk=asset.id %}" class="btn btn-danger btn-sm">Delete</a>
       </div>
     </div>
     <div class="card-body">
