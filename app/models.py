@@ -23,10 +23,15 @@ class Investor(AbstractUser):
 
 
 class Order(models.Model):
+    BUY = "BUY"
+    SELL = "SELL"
+    SIDE_CHOICES = [(BUY, "Buy"), (SELL, "Sell")]
+
     id = models.AutoField(primary_key=True)
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     investor = ForeignKey(Investor, on_delete=models.CASCADE)
+    side = models.CharField(max_length=4, choices=SIDE_CHOICES)
     datetime = models.DateTimeField(auto_now_add=True)
     value = models.DecimalField(editable=False, decimal_places=3)
 
