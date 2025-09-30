@@ -1,7 +1,7 @@
 from django.urls import path
 
 from app.views import AssetTypeListView, AssetListView, InvestorListView, OrderListView, AssetDetailView, \
-    AssetCreateView, AssetUpdateView, AssetDeleteView, IndexView
+    AssetCreateView, AssetUpdateView, AssetDeleteView, IndexView, AssetBuyView, AssetSellView
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
@@ -15,6 +15,8 @@ urlpatterns = [
     path("assets/create/", AssetCreateView.as_view(), name="asset-create"),
     path("assets/<int:pk>/update", AssetUpdateView.as_view(), name="asset-update"),
     path("assets/<int:pk>/delete", AssetDeleteView.as_view(), name="asset-delete"),
+    path("assets/<int:pk>/buy", AssetBuyView.as_view(), name="asset-buy"),
+    path("assets/<int:pk>/sell", AssetSellView.as_view(), name="asset-sell"),
 
     # INVESTOR
     path("investors/", InvestorListView.as_view(), name="investor-list"),
