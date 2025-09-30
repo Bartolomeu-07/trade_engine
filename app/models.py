@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import ForeignKey
+from decimal import Decimal
 
 
 class AssetType(models.Model):
@@ -12,12 +13,12 @@ class AssetType(models.Model):
 
 class Asset(models.Model):
     name = models.CharField(max_length=100)
-    price = models.FloatField()
+    price = models.DecimalField(decimal_places=3)
     type = models.ForeignKey(AssetType, on_delete=models.CASCADE)
 
 
 class Investor(AbstractUser):
-    balance = models.FloatField(default=100000)
+    balance = models.DecimalField(default=100000, decimal_places=3)
     holdings = models.ManyToManyField(Asset, related_name='investors')
 
 
@@ -27,7 +28,7 @@ class Order(models.Model):
     quantity = models.IntegerField()
     investor = ForeignKey(Investor, on_delete=models.CASCADE)
     datetime = models.DateTimeField(auto_now_add=True)
-    value = models.FloatField(editable=False)
+    value = models.DecimalField(editable=False, decimal_places=3)
 
     def save(self, *args, **kwargs):
         self.value = self.asset.price * self.quantity
