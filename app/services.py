@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from .models import Investor, Asset, Holding, Order
 
-def execute_order_simple(*, investor: Investor, asset: Asset, side: str, quantity: int) -> Order:
+def execute_order(*, investor: Investor, asset: Asset, side: str, quantity: int) -> Order:
     if quantity <= 0:
         raise ValidationError("Quantity must be positive.")
 
