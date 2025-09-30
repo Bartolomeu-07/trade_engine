@@ -31,7 +31,14 @@
             <span class="fw-bold">
               {{ asset.type.name|default:asset.type }}
             </span>
+
           </div>
+          {% if user.is_authenticated %}
+            <div class="mt-4">
+              <a href="{% url 'app:asset-buy' object.pk %}" class="btn btn-success me-2">Buy</a>
+              <a href="{% url 'app:asset-sell' object.pk %}" class="btn btn-danger">Sell</a>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
