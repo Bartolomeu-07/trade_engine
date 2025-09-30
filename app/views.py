@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic import TemplateView, FormView
 
-from app.forms import AssetForm
+from app.forms import AssetForm, TradeForm
 from app.models import AssetType, Asset, Investor, Order
 from app.services import execute_order
 
@@ -72,7 +72,7 @@ class OrderListView(generic.ListView):
 
 @method_decorator(name="dispatch")
 class AssetBuyView(FormView):
-    template_name = "pages/asset_trade.html"
+    template_name = "app/asset_trade.html"
     form_class = TradeForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -104,6 +104,9 @@ class AssetBuyView(FormView):
 
 @method_decorator(name="dispatch")
 class AssetSellView(AssetBuyView):
+    template_name = "app/asset_trade.html"
+    form_class = TradeForm
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["side"] = Order.SELL
@@ -121,3 +124,6 @@ class AssetSellView(AssetBuyView):
         except ValidationError as e:
             form.add_error(None, e.message)
             return self.form_invalid(form)
+
+    def get_success_url(self):
+        return reverse("app:asset-detail", kwargs={"pk": self.asset.pk})
