@@ -19,6 +19,7 @@ class Asset(models.Model):
 
 class Investor(AbstractUser):
     balance = models.DecimalField(default=100000, decimal_places=3, max_digits=10)
+    holdings = models.ManyToManyField(Asset, through="Holding", related_name="investors")
 
 
 class Holding(models.Model):
