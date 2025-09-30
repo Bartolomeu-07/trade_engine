@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic import TemplateView, FormView
 
@@ -70,7 +69,6 @@ class OrderListView(generic.ListView):
     fields = "__all__"
 
 
-@method_decorator(name="dispatch")
 class AssetBuyView(FormView):
     template_name = "app/asset_trade.html"
     form_class = TradeForm
@@ -102,7 +100,6 @@ class AssetBuyView(FormView):
         return reverse("app:asset-detail", kwargs={"pk": self.asset.pk})
 
 
-@method_decorator(name="dispatch")
 class AssetSellView(AssetBuyView):
     template_name = "app/asset_trade.html"
     form_class = TradeForm
