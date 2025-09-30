@@ -11,3 +11,7 @@ class AssetForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["type"].empty_label = "--Select the type of an asset--"
+
+
+class TradeForm(forms.Form):
+    quantity = forms.IntegerField(min_value=1, label="Quantity")
