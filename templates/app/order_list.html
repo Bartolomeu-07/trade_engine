@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           {% for order in orders %}
-          <tr>
+          <tr class="{% if order.side == 'BUY' %}table-success{% elif order.side == 'SELL' %}table-danger{% endif %}">
             <td>{{ order.id }}</td>
             <td>{{ order.investor.username }}</td>
             <td>{{ order.asset.name }}</td>
