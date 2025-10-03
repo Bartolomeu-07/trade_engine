@@ -20,6 +20,13 @@ class AssetTypeListView(generic.ListView):
     fields = "__all__"
 
 
+class AssetTypeUpdateView(generic.UpdateView):
+    model = AssetType
+    form_class = AssetTypeForm
+    template_name = "app/assettype_form.html"
+    context_object_name = "assettypes"
+
+
 class AssetListView(generic.ListView):
     model = Asset
     template_name = "app/asset_list.html"
