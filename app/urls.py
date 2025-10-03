@@ -8,7 +8,7 @@ urlpatterns = [
 
     # ASSET TYPE
     path("assettypes/", AssetTypeListView.as_view(), name="asset-type-list"),
-    path("assetypes/update", AssetTypeUpdateView.as_view(), name="asset-type-update"),
+    path("assettypes/<int:pk>/update", AssetTypeUpdateView.as_view(), name="asset-type-update"),
 
     # ASSET
     path("assets/", AssetListView.as_view(), name="asset-list"),
