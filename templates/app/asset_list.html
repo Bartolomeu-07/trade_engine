@@ -12,7 +12,6 @@
       <div class="list-group list-group-flush">
         {% for asset in object_list %}
           <div class="list-group-item d-flex justify-content-between align-items-center">
-            <!-- Klikalny link na cały blok po lewej -->
             <a href="{% url 'app:asset-detail' asset.id %}"
                class="flex-grow-1 text-decoration-none text-dark">
               <div class="row">
@@ -21,7 +20,6 @@
                 <div class="col-12 col-md-4">{{ asset.type.name|default:asset.type }}</div>
               </div>
             </a>
-            <!-- Przyciski akcji -->
             <div class="ms-3">
               <a href="{% url 'app:asset-update' asset.id %}" class="btn btn-dark btn-sm me-2">Update</a>
               <a href="{% url 'app:asset-delete' asset.id %}" class="btn btn-danger btn-sm">Delete</a>
