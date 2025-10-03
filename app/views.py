@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.views.generic import TemplateView, FormView
 
-from app.forms import AssetForm, TradeForm
+from app.forms import AssetForm, TradeForm, AssetTypeForm
 from app.models import AssetType, Asset, Investor, Order
 from app.services import execute_order
 
