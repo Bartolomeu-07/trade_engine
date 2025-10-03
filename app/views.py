@@ -20,6 +20,12 @@ class AssetTypeListView(generic.ListView):
     fields = "__all__"
 
 
+class AssetTypeCreateView(generic.CreateView):
+    model = AssetType
+    form_class = AssetTypeForm
+    template_name = "app/assettype_form.html"
+    success_url = reverse_lazy("app:asset-type_list")
+
 class AssetTypeUpdateView(generic.UpdateView):
     model = AssetType
     form_class = AssetTypeForm
