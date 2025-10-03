@@ -19,13 +19,16 @@ class Asset(models.Model):
 
 class Investor(AbstractUser):
     balance = models.DecimalField(default=100000, decimal_places=3, max_digits=10)
-    holdings = models.ManyToManyField(Asset, through="Holding", related_name="investors")
+    holdings = models.ManyToManyField(Asset, through="Holding", related_name="holders")
 
 
 class Holding(models.Model):
     investor = models.ForeignKey(Investor, on_delete=models.CASCADE)
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.investor.username} holds {self.quantity} × {self.asset.name}"
 
 
 class Order(models.Model):
