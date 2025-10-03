@@ -30,7 +30,9 @@ class AssetTypeUpdateView(generic.UpdateView):
     model = AssetType
     form_class = AssetTypeForm
     template_name = "app/assettype_form.html"
-    context_object_name = "assettypes"
+
+    def get_success_url(self):
+        return reverse("app:asset-type-list", kwargs={"pk": self.object.pk})
 
 
 class AssetListView(generic.ListView):
