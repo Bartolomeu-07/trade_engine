@@ -30,6 +30,13 @@ class Holding(models.Model):
     def __str__(self):
         return f"{self.investor.username} holds {self.quantity} × {self.asset.name}"
 
+    def save(self, *args, **kwargs):
+        if self.quantity == 0:
+            if self.pk:
+                self.delete()
+            return
+        super().save(*args, **kwargs)
+
 
 class Order(models.Model):
     BUY = "BUY"
