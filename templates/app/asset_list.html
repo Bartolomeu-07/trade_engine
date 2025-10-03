@@ -6,57 +6,32 @@
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0">Assets</h5>
-      <div>
-        <a href="{% url 'app:asset-create' %}" class="btn btn-dark btn-sm me-2">Create new</a>
+      <a href="{% url 'app:asset-create' %}" class="btn btn-primary btn-sm">Add Asset</a>
+    </div>
+    <div class="card-body p-0">
+      <div class="list-group list-group-flush">
+        {% for asset in object_list %}
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <!-- Klikalny link na cały blok po lewej -->
+            <a href="{% url 'app:asset-detail' asset.id %}"
+               class="flex-grow-1 text-decoration-none text-dark">
+              <div class="row">
+                <div class="col-12 col-md-4 fw-bold">{{ asset.name }}</div>
+                <div class="col-12 col-md-4">{{ asset.price|floatformat:2 }}</div>
+                <div class="col-12 col-md-4">{{ asset.type.name|default:asset.type }}</div>
+              </div>
+            </a>
+            <!-- Przyciski akcji -->
+            <div class="ms-3">
+              <a href="{% url 'app:asset-update' asset.id %}" class="btn btn-dark btn-sm me-2">Update</a>
+              <a href="{% url 'app:asset-delete' asset.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+          </div>
+        {% empty %}
+          <div class="list-group-item text-center text-muted">No assets available.</div>
+        {% endfor %}
       </div>
     </div>
-
-    <div class="table-responsive">
-      <table class="table table-hover mb-0">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for asset in assets %}
-          <tr onclick="window.location='{% url 'app:asset-detail' asset.id %}'" style="cursor: pointer;">
-            <td>{{ asset.id }}</td>
-            <td>{{ asset.name }}</td>
-            <td>{{ asset.price|floatformat:3 }}</td>
-            <td>{{ asset.type.name }}</td>
-          </tr>
-          {% empty %}
-          <tr><td colspan="4" class="text-center py-5">No assets available.</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
-    {% if is_paginated %}
-    <div class="card-footer">
-      <nav aria-label="Pagination">
-        <ul class="pagination mb-0">
-          {% if page_obj.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-          </li>
-          {% endif %}
-          <li class="page-item disabled">
-            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-          </li>
-          {% if page_obj.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-          </li>
-          {% endif %}
-        </ul>
-      </nav>
-    </div>
-    {% endif %}
   </div>
 </div>
 {% endblock content %}
