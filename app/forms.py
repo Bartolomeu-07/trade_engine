@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Asset
+from .models import Asset, AssetType
 
 
 class AssetForm(forms.ModelForm):
@@ -15,3 +15,9 @@ class AssetForm(forms.ModelForm):
 
 class TradeForm(forms.Form):
     quantity = forms.IntegerField(min_value=1, label="Quantity")
+
+
+class AssetTypeForm(forms.ModelForm):
+    class Meta:
+        model = AssetType
+        fields = "__all__"
