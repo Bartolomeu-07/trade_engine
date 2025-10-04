@@ -4,25 +4,27 @@
 {% block content %}
 <div class="container py-4">
   <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card-header">
       <h5 class="mb-0">Investors</h5>
     </div>
     <div class="card-body p-0">
       <div class="list-group list-group-flush">
         {% for investor in object_list %}
-          <div class="list-group-item d-flex justify-content-between align-items-center">
-            <div class="flex-grow-1">
+          <div class="list-group-item d-flex justify-content-between align-items-center clickable-row"
+               onclick="window.location='{% url 'app:investor-detail' investor.id %}'">
+
+            <div>
               <div><strong>Username:</strong> {{ investor.username }}</div>
               <div><strong>Balance:</strong> {{ investor.balance|floatformat:2 }}</div>
               <div>
                 <strong>Holdings:</strong>
                 {% if investor.holding_set.all %}
                   {% for holding in investor.holding_set.all %}
-                    <span class="badge bg-secondary">
-                      <a href="{% url 'app:asset-detail' holding.asset.id %}" class="badge bg-secondary text-decoration-none fs-6 px-1 py-0">
-                        {{ holding.asset.name }} ({{ holding.quantity }})
-                      </a>
-                    </span>
+                    <a href="{% url 'app:asset-detail' holding.asset.id %}"
+                       class="badge bg-secondary fs-6 px-3 py-2 text-decoration-none"
+                       onclick="event.stopPropagation()">
+                      {{ holding.asset.name }} ({{ holding.quantity }})
+                    </a>
                   {% empty %}
                     <span class="text-muted">None</span>
                   {% endfor %}
@@ -34,8 +36,8 @@
 
             {% if user.is_authenticated and user.id == investor.id %}
               <div class="ms-3">
-                <a href="#" class="btn btn-dark btn-sm me-2">Update</a>
-                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                <a href="#" class="btn btn-dark btn-sm me-2" onclick="event.stopPropagation()">Update</a>
+                <a href="#" class="btn btn-danger btn-sm" onclick="event.stopPropagation()">Delete</a>
               </div>
             {% endif %}
           </div>
@@ -46,4 +48,10 @@
     </div>
   </div>
 </div>
+
+<style>
+.clickable-row {
+  cursor: pointer;
+}
+</style>
 {% endblock content %}
