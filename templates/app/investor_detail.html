@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layouts/base.html" %}
+{% block title %}Investor Details{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Investor Details</h5>
+      <a href="{% url 'app:investor-list' %}" class="btn btn-secondary btn-sm">Back to List</a>
+    </div>
+
+    <div class="card-body">
+      <div class="row g-4">
+        <div class="col-12 col-md-8">
+          <div class="mb-3">
+            <span class="text-muted d-block">Username</span>
+            <span class="fw-bold">{{ investor.username }}</span>
+          </div>
+
+          <div class="mb-3">
+            <span class="text-muted d-block">Balance</span>
+            <span class="fw-bold">{{ investor.balance|floatformat:2 }}</span>
+          </div>
+
+          <div class="mb-3">
+            <span class="text-muted d-block">Holdings Value</span>
+            <span class="fw-bold">
+              {{ holdings_value|floatformat:2 }}
+            </span>
+          </div>
+
+          <div class="mb-2">
+            <span class="text-muted d-block mb-2">Holdings</span>
+            {% with hs=investor.holding_set.all %}
+              {% if hs %}
+                {% for holding in hs %}
+                  <a href="{% url 'app:asset-detail' holding.asset.id %}"
+                     class="badge bg-secondary text-decoration-none fs-6 px-3 py-2 me-2 mb-2 d-inline-block">
+                    {{ holding.asset.name }} ({{ holding.quantity }})
+                  </a>
+                {% empty %}
+                  <span class="text-muted">None</span>
+                {% endfor %}
+              {% else %}
+                <span class="text-muted">None</span>
+              {% endif %}
+            {% endwith %}
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          {% if user.is_authenticated and user.id == investor.id %}
+            <div class="d-flex justify-content-md-end justify-content-start">
+              <div>
+                <a href="#{#% url 'app:investor-update' investor.id %#}" class="btn btn-dark btn-sm me-2">Update</a>
+                <a href="#{#% url 'app:investor-delete' investor.id %#}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
