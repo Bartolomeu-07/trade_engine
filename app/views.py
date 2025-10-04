@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.views.generic import TemplateView, FormView
 
-from app.forms import AssetForm, TradeForm, AssetTypeForm
+from app.forms import AssetForm, TradeForm, AssetTypeForm, InvestorForm
 from app.models import AssetType, Asset, Investor, Order
 from app.services import execute_order
 
@@ -107,7 +107,7 @@ class InvestorUpdateView(generic.UpdateView):
     template_name = "app/investor_form.html"
 
     def get_success_url(self):
-        return reverse("app:asset-detail", kwargs={"pk": self.object.pk})
+        return reverse("app:investor-detail", kwargs={"pk": self.object.pk})
 
 
 class OrderListView(generic.ListView):
