@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layouts/base.html" %}
+{% block title %}Delete Asset Type{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="card">
+    <div class="card-body text-center">
+      <h3 class="mb-4">Are you sure you want to delete the asset type "{{ object.name }}"?</h3>
+
+      <form method="post" class="d-inline">
+        {% csrf_token %}
+        <input type="submit" value="Delete" class="btn btn-danger btn-lg me-3">
+      </form>
+
+      <a href="{% url 'app:asset-type-list' %}" class="btn btn-secondary btn-lg">Cancel</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}
