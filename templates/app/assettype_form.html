@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+{% block title %}Asset Type Form{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Asset Type Form</h5>
+      <a href="{% url 'app:asset-type-list' %}" class="btn btn-secondary btn-sm">Back to List</a>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+          <label for="id_name" class="form-label">Name</label>
+          {{ form.name }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

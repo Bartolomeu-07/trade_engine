@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app',
+    'theme_material_kit'
 ]
 
 MIDDLEWARE = [
@@ -102,6 +104,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
+
+AUTH_USER_MODEL = "app.Investor"
+
+LOGIN_REDIRECT_URL = '/'
 
 LANGUAGE_CODE = 'en-us'
 

@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+{% block title %}{{ side }} {{ asset.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">{{ side }} {{ asset.name }}</h5>
+    </div>
+    <div class="card-body">
+      <p>Current price: <strong>{{ asset.price }}</strong></p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn {% if side == 'BUY' %}btn-primary{% else %}btn-danger{% endif %}">
+          {{ side }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

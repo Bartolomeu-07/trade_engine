@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+{% block title %}Asset: {{ asset.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Asset Details</h5>
+      <div>
+        <a href="{% url 'app:asset-update' pk=asset.id %}" class="btn btn-dark btn-sm me-2">Update</a>
+        <a href="{% url 'app:asset-delete' pk=asset.id %}" class="btn btn-danger btn-sm">Delete</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row gy-3">
+        <div class="col-12 col-md-4">
+          <div class="d-flex flex-column">
+            <span class="text-muted">Name</span>
+            <span class="fw-bold">{{ asset.name }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="d-flex flex-column">
+            <span class="text-muted">Price</span>
+            <span class="fw-bold">{{ asset.price|floatformat:2 }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="d-flex flex-column">
+            <span class="text-muted">Type</span>
+            <span class="fw-bold">
+              {{ asset.type.name|default:asset.type }}
+            </span>
+          </div>
+        </div>
+
+        {% if user.is_authenticated %}
+        <div class="col-12">
+          <div class="mt-3">
+            <a href="{% url 'app:asset-buy' asset.id %}" class="btn btn-success me-2">Buy</a>
+            <a href="{% url 'app:asset-sell' asset.id %}" class="btn btn-danger">Sell</a>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

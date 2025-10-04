@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+{% block title %}Assets{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Assets</h5>
+      <a href="{% url 'app:asset-create' %}" class="btn btn-primary btn-sm">Add Asset</a>
+    </div>
+    <div class="card-body p-0">
+      <div class="list-group list-group-flush">
+        {% for asset in object_list %}
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'app:asset-detail' asset.id %}"
+               class="flex-grow-1 text-decoration-none text-dark">
+              <div class="row">
+                <div class="col-12 col-md-4 fw-bold">{{ asset.name }}</div>
+                <div class="col-12 col-md-4">{{ asset.price|floatformat:2 }}</div>
+                <div class="col-12 col-md-4">{{ asset.type.name|default:asset.type }}</div>
+              </div>
+            </a>
+            <div class="ms-3">
+              <a href="{% url 'app:asset-update' asset.id %}" class="btn btn-dark btn-sm me-2">Update</a>
+              <a href="{% url 'app:asset-delete' asset.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+          </div>
+        {% empty %}
+          <div class="list-group-item text-center text-muted">No assets available.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
