@@ -110,6 +110,12 @@ class InvestorUpdateView(generic.UpdateView):
         return reverse("app:investor-detail", kwargs={"pk": self.object.pk})
 
 
+class InvestorDeleteView(generic.DeleteView):
+    model = Investor
+    template_name = "app/investor_delete.html"
+    success_url = reverse_lazy("app:index")
+
+
 class OrderListView(generic.ListView):
     model = Order
     template_name = "order_list.html"
