@@ -101,6 +101,15 @@ class InvestorDetailView(generic.DetailView):
         return ctx
 
 
+class InvestorUpdateView(generic.UpdateView):
+    model = Investor
+    form_class = InvestorForm
+    template_name = "app/investor_form.html"
+
+    def get_success_url(self):
+        return reverse("app:asset-detail", kwargs={"pk": self.object.pk})
+
+
 class OrderListView(generic.ListView):
     model = Order
     template_name = "order_list.html"
