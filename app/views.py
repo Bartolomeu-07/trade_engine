@@ -24,7 +24,7 @@ class AssetTypeCreateView(generic.CreateView):
     model = AssetType
     form_class = AssetTypeForm
     template_name = "app/assettype_form.html"
-    success_url = reverse_lazy("app:asset-type_list")
+    success_url = reverse_lazy("app:asset-type-list")
 
 class AssetTypeUpdateView(generic.UpdateView):
     model = AssetType
