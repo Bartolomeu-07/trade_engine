@@ -2,7 +2,7 @@ from django.urls import path
 
 from app.views import AssetTypeListView, AssetListView, InvestorListView, OrderListView, AssetDetailView, \
     AssetCreateView, AssetUpdateView, AssetDeleteView, IndexView, AssetBuyView, AssetSellView, AssetTypeUpdateView, \
-    AssetTypeCreateView, AssetTypeDeleteView
+    AssetTypeCreateView, AssetTypeDeleteView, InvestorDetailView
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
@@ -24,6 +24,7 @@ urlpatterns = [
 
     # INVESTOR
     path("investors/", InvestorListView.as_view(), name="investor-list"),
+    path("investors/<int:pk>/detail", InvestorDetailView.as_view(), name="investor-detail"),
 
     # ORDER
     path("orders/", OrderListView.as_view(), name="order-list"),

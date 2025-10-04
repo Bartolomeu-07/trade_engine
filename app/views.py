@@ -83,6 +83,13 @@ class InvestorListView(generic.ListView):
     fields = ["username", "balance", "holdings"]
 
 
+class InvestorDetailView(generic.DetailView):
+    model = Investor
+    template_name = "app/investor_detail.html"
+    context_object_name = "investor"
+    fields = ["username", "balance", "holdings"]
+
+
 class OrderListView(generic.ListView):
     model = Order
     template_name = "order_list.html"
