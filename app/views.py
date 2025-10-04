@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.db.models import DecimalField, F, Sum
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -87,7 +88,17 @@ class InvestorDetailView(generic.DetailView):
     model = Investor
     template_name = "app/investor_detail.html"
     context_object_name = "investor"
-    fields = ["username", "balance", "holdings"]
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        investor = self.object
+        total = investor.holding_set.annotate(
+            subtotal=F('quantity') * F('asset__price')
+        ).aggregate(
+            total=Sum('subtotal', output_field=DecimalField(max_digits=14, decimal_places=2))
+        )['total'] or 0
+        ctx['holdings_value'] = total
+        return ctx
 
 
 class OrderListView(generic.ListView):
