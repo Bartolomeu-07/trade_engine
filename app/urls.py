@@ -25,7 +25,7 @@ urlpatterns = [
     # INVESTOR
     path("investors/", InvestorListView.as_view(), name="investor-list"),
     path("investors/<int:pk>/detail", InvestorDetailView.as_view(), name="investor-detail"),
-    path("investors/<int:pk>/update", InvestorUpdateView.as_view(), name="investor-update")
+    path("investors/<int:pk>/update", InvestorUpdateView.as_view(), name="investor-update"),
 
     # ORDER
     path("orders/", OrderListView.as_view(), name="order-list"),
