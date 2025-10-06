@@ -31,3 +31,11 @@ class TestModels(TestCase):
             str(self.holding),
             f"{self.investor.username} holds {self.holding.quantity} × {self.asset.name}"
         )
+
+    def test_holding_should_be_deleted_if_quantity_equal_to_zero(self):
+        self.assertEqual(Holding.objects.all().count(), 1)
+        self.holding.quantity = 0
+        self.holding.save()
+        self.assertEqual(Holding.objects.all().count(), 0)
+
+    #def test_order_value_is_calculate_correct(self):
