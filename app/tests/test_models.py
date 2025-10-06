@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from app.models import AssetType, Holding, Investor, Asset
+from app.models import AssetType, Holding, Investor, Asset, Order
 
 
 class TestModels(TestCase):
@@ -38,4 +38,21 @@ class TestModels(TestCase):
         self.holding.save()
         self.assertEqual(Holding.objects.all().count(), 0)
 
-    #def test_order_value_is_calculate_correct(self):
+    def test_order_value_is_calculate_correct(self):
+        order_1 = Order.objects.create(
+            id=1,
+            asset = self.asset,
+            quantity = 5,
+            investor = self.investor,
+            side = "Buy",
+        )
+        self.assertEqual(order_1.value, self.asset.price * order_1.quantity)
+
+        order_2 = Order.objects.create(
+            id=2,
+            asset=self.asset,
+            quantity=3,
+            investor=self.investor,
+            side="Sell",
+        )
+        self.assertEqual(order_2.value, self.asset.price * order_2.quantity)
