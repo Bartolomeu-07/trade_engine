@@ -77,4 +77,21 @@ class TestViews(TestCase):
         self.asset_type.refresh_from_db()
         self.assertEqual(self.asset_type.name, data["name"])
 
+    def test_asset_type_delete(self):
+        self.asset_type = AssetType.objects.create(name="Stocks")
+        url = reverse("app:asset-type-delete", args=[self.asset_type.id])
+
+        # GET method
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, "app/assettype_delete.html")
+
+        # POST method
+        success_url = reverse("app:asset-type-list")
+        res = self.client.post(url)
+
+        self.assertFalse(AssetType.objects.filter(name='Stocks').exists())
+        self.assertRedirects(res, success_url, fetch_redirect_response=False)
+
 
