@@ -33,7 +33,7 @@ class AssetTypeUpdateView(generic.UpdateView):
     template_name = "app/assettype_form.html"
 
     def get_success_url(self):
-        return reverse("app:asset-type-list", kwargs={"pk": self.object.pk})
+        return reverse("app:asset-type-list")
 
 
 class AssetTypeDeleteView(generic.DeleteView):
