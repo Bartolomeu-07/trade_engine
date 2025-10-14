@@ -2,9 +2,10 @@ from decimal import Decimal
 from typing import assert_type
 
 from django import forms
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from app.forms import AssetForm, TradeForm
+from app.forms import AssetForm, TradeForm, InvestorForm
 from app.models import AssetType, Asset
 
 
@@ -66,3 +67,21 @@ class TestForms(TestCase):
         form = TradeForm(data)
 
         self.assertFalse(form.is_valid())
+
+    # --InvestorForm--
+    def test_investor_form_with_valid_data(self):
+        User = get_user_model()
+        self.investor = User.objects.create_user(
+            username="test_investor",
+            password="ZAQ!2wsx1234",
+            email="test@test.pl",
+        )
+        form = InvestorForm(
+            data={
+                "balance": "5000.00",
+                "password1": "NewPass!234",
+                "password2": "NewPass!234",
+            },
+            instance=self.investor,
+        )
+        self.assertTrue(form.is_valid())
