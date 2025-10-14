@@ -1,5 +1,6 @@
 from platform import processor
 from tkinter.font import names
+from typing import assert_type
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
@@ -98,7 +99,7 @@ class TestViews(TestCase):
 # --Asset--
 
     def test_asset_list(self):
-        type= AssetType.objects.create(name="Stocks")
+        type = AssetType.objects.create(name="Stocks")
         Asset.objects.create(name="Tesla", price=1001.20, type=type)
         Asset.objects.create(name="Samsung", price=300.56, type=type)
         assets = Asset.objects.all()
@@ -113,3 +114,12 @@ class TestViews(TestCase):
         )
         self.assertTemplateUsed(res, 'app/asset_list.html')
 
+    def test_asset_detail(self):
+        type = AssetType.objects.create(name="Stocks")
+        test_asset = Asset.objects.create(name="Tesla", price=1001.20, type=type)
+
+        url = reverse("app:asset-detail", args=[test_asset.id])
+        res = self.client.get(url)
+
+        self.assertEqual(res.context['asset'], test_asset)
+        self.assertTemplateUsed(res, "app/asset_detail.html")
