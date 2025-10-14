@@ -103,3 +103,17 @@ class TestForms(TestCase):
             instance=self.investor,
         )
         self.assertFalse(form.is_valid())
+
+    def test_investor_form_with_invalid_balance(self):
+        self.investor = User.objects.create_user(
+            username="test_investor",
+            password="ZAQ!2wsx1234",
+            email="test@test.pl",
+        )
+        form = InvestorForm(
+            data={
+                "balance": "-9000.00",
+            },
+            instance=self.investor,
+        )
+        self.assertFalse(form.is_valid())
