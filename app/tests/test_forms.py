@@ -9,6 +9,9 @@ from app.forms import AssetForm, TradeForm, InvestorForm
 from app.models import AssetType, Asset
 
 
+User = get_user_model()
+
+
 class TestForms(TestCase):
     # --AssetForm--
     def test_asset_form_type_field(self):
@@ -70,7 +73,6 @@ class TestForms(TestCase):
 
     # --InvestorForm--
     def test_investor_form_with_valid_data(self):
-        User = get_user_model()
         self.investor = User.objects.create_user(
             username="test_investor",
             password="ZAQ!2wsx1234",
@@ -85,3 +87,19 @@ class TestForms(TestCase):
             instance=self.investor,
         )
         self.assertTrue(form.is_valid())
+
+    def test_investor_form_with_mismatching_passwords(self):
+        self.investor = User.objects.create_user(
+            username="test_investor",
+            password="ZAQ!2wsx1234",
+            email="test@test.pl",
+        )
+        form = InvestorForm(
+            data={
+                "balance": "5000.00",
+                "password1": "NewPass!234",
+                "password2": "NewBass!234",
+            },
+            instance=self.investor,
+        )
+        self.assertFalse(form.is_valid())
