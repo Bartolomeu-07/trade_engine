@@ -164,3 +164,21 @@ class TestViews(TestCase):
         self.assertRedirects(res, success_url, fetch_redirect_response=False)
         self.asset.refresh_from_db()
         self.assertEqual(self.asset.price, Decimal("12.003"))
+
+    def test_asset_delete(self):
+        self.asset_type = AssetType.objects.create(name="Stocks")
+        self.asset = Asset.objects.create(name="Tesla", price=1001.20, type=self.asset_type)
+        url = reverse("app:asset-delete", args=[self.asset.id])
+
+        # GET method
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, "app/asset_delete.html")
+
+        # POST method
+        success_url = reverse("app:asset-list")
+        res = self.client.post(url)
+
+        self.assertFalse(Asset.objects.filter(name='Tesla').exists())
+        self.assertRedirects(res, success_url, fetch_redirect_response=False)
