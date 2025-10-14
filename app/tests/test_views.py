@@ -10,7 +10,9 @@ from django.urls import reverse
 from app.forms import AssetTypeForm, AssetForm, InvestorForm
 from app.models import AssetType, Asset, Investor, Order
 
+
 User = get_user_model()
+
 
 class TestViews(TestCase):
     def setUp(self):
@@ -186,7 +188,6 @@ class TestViews(TestCase):
 # --Investor--
 
     def test_investor_list(self):
-        User = get_user_model()
         User.objects.create_superuser(
             username="test_one",
             email="tester@gmail.com",
@@ -212,7 +213,6 @@ class TestViews(TestCase):
         self.assertTemplateUsed(res, "app/investor_list.html")
 
     def test_investor_detail(self):
-        User = get_user_model()
         investor = User.objects.create_superuser(
             username="test_one",
             email="tester@gmail.com",
@@ -228,7 +228,6 @@ class TestViews(TestCase):
         self.assertTemplateUsed(res, "app/investor_detail.html")
 
     def test_investor_update(self):
-        User = get_user_model()
         investor = User.objects.create_superuser(
             username="test_one",
             email="tester@gmail.com",
@@ -259,7 +258,6 @@ class TestViews(TestCase):
         self.assertTrue(investor.check_password(data["password1"]))
 
     def test_investor_delete(self):
-        User = get_user_model()
         investor = User.objects.create_superuser(
             username="test_one",
             email="tester@gmail.com",
@@ -284,7 +282,6 @@ class TestViews(TestCase):
     def test_order_list(self):
         type = AssetType.objects.create(name="Crypto")
         asset = Asset.objects.create(name="Bitcoin", price=1200, type=type)
-        User = get_user_model()
         investor = User.objects.create_superuser(
             username="test_one",
             email="tester@gmail.com",
