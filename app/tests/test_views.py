@@ -1,3 +1,4 @@
+from decimal import Decimal
 from platform import processor
 from tkinter.font import names
 from typing import assert_type
@@ -143,3 +144,23 @@ class TestViews(TestCase):
         self.assertRedirects(res, success_url, fetch_redirect_response=False)
         self.assertTrue(Asset.objects.filter(name='Tesla').exists())
 
+    def test_asset_update(self):
+        self.asset_type = AssetType.objects.create(name="Stocks")
+        self.asset = Asset.objects.create(name="Tesla", price=1001.20, type=self.asset_type)
+        url = reverse("app:asset-update", args=[self.asset.id])
+
+        # GET method
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, "app/asset_form.html")
+        self.assertIsInstance(res.context['form'], AssetForm)
+
+        # POST method
+        success_url = reverse("app:asset-detail", args=[self.asset.id])
+        data = {"name": self.asset.name, "price": 12.003, "type": self.asset_type.id}
+        res = self.client.post(url, data)
+
+        self.assertRedirects(res, success_url, fetch_redirect_response=False)
+        self.asset.refresh_from_db()
+        self.assertEqual(self.asset.price, Decimal("12.003"))
