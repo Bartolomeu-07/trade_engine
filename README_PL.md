@@ -37,15 +37,20 @@ Projekt opiera się na pięciu głównych modelach:
 
 ---
 
-## 🔐 Konto testowe inwestora
+## 📊 Testy automatyczne
 
-Aby przetestować aplikację bez rejestracji, możesz zalogować się na konto testowe:
+Projekt zawiera zestaw testów automatycznych obejmujących główne komponenty aplikacji.
+Testy zostały przygotowane w oparciu o wbudowany framework testowy Django oraz pytest-django.
 
-### login: TestInvestor
-### password: zaq1@wsx
+🔍 Zakres testów:
 
-Po zalogowaniu uzyskasz dostęp do wszystkich funkcji inwestora —  
-możesz przeglądać aktywa, kupować i sprzedawać je oraz zarządzać swoim saldem.
+🧱 Modele – weryfikacja poprawności logiki biznesowej (np. automatyczne usuwanie obiektu Holding po wyzerowaniu ilości, poprawne obliczanie wartości Order itp.).
+
+🌐 Widoki (Views) – testy endpointów i widoków klasowych (ListView, DetailView, CreateView, UpdateView, DeleteView) sprawdzające poprawność odpowiedzi HTTP, statusów i kontekstu.
+
+📝 Formularze (Forms) – testy walidacji danych wejściowych, pól formularzy i zachowania w przypadkach brzegowych.
+
+Testy umożliwiają automatyczne sprawdzenie integralności projektu i zapewniają stabilność po każdej zmianie w kodzie.
 
 ---
 
