@@ -33,11 +33,11 @@ class TestForms(TestCase):
         self.assertEqual(obj.price, Decimal("4.34"))
         self.assertEqual(obj.type, self.asset_type)
 
-    def test_asset_form_with_non_decimal_price(self):
+    def test_asset_form_with_type_string_price(self):
         self.asset_type = AssetType.objects.create(name="Forex")
         data = {
             "name": "USD/PLN",
-            "price": 4.34,
+            "price": "abc",
             "type": self.asset_type.pk,
         }
         form = AssetForm(data=data)
