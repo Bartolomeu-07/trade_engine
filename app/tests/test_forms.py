@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from app.forms import AssetForm, TradeForm, InvestorForm
+from app.forms import AssetForm, TradeForm, InvestorForm, AssetTypeForm
 from app.models import AssetType, Asset
 
 
@@ -117,3 +117,11 @@ class TestForms(TestCase):
             instance=self.investor,
         )
         self.assertFalse(form.is_valid())
+
+    # --AssetTypeForm--
+    def test_asset_type_form_with_valid_name(self):
+        form = AssetTypeForm(
+            data={"name": "Forex"}
+        )
+
+        self.assertTrue(form.is_valid())
