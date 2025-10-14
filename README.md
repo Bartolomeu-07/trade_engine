@@ -37,14 +37,20 @@ The project is based on five core models:
 
 ---
 
-## 🔐 Test Investor Account
+## 📊 Automated Tests
 
-To try out the application without registration, log in using the demo account:
+The project includes a comprehensive set of automated tests covering all key components of the application.
+Tests are implemented using Django’s built-in testing framework and pytest-django.
 
-### login: TestInvestor
-### password: zaq1@wsx
+🔍 Test scope:
 
-You’ll gain access to full investor functionality — browsing assets, performing buy/sell actions, and managing your balance.
+🧱 Models – verification of business logic (e.g. automatic deletion of Holding objects with zero quantity, correct Order value calculation, etc.).
+
+🌐 Views – testing of class-based views (ListView, DetailView, CreateView, UpdateView, DeleteView) for correct HTTP responses, status codes, and context data.
+
+📝 Forms – validation of user input and form behavior under edge cases.
+
+These tests help maintain application stability and reliability after every code change
 
 ---
 
