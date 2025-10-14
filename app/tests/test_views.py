@@ -8,7 +8,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from app.forms import AssetTypeForm, AssetForm
-from app.models import AssetType, Asset
+from app.models import AssetType, Asset, Investor
 
 User = get_user_model()
 
@@ -182,3 +182,31 @@ class TestViews(TestCase):
 
         self.assertFalse(Asset.objects.filter(name='Tesla').exists())
         self.assertRedirects(res, success_url, fetch_redirect_response=False)
+
+# --Investor--
+
+    def test_investor_list(self):
+        User = get_user_model()
+        User.objects.create_superuser(
+            username="test_one",
+            email="tester@gmail.com",
+            password="test1234@",
+            balance=Decimal("12000.00"),
+        )
+        User.objects.create_superuser(
+            username="test_two",
+            email="testing@gmail.com",
+            password="test1234%",
+            balance=Decimal("135000.50"),
+        )
+        investors = Investor.objects.all()
+
+        url = reverse("app:investor-list")
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(
+            list(investors),
+            list(res.context['investors']),
+        )
+        self.assertTemplateUsed(res, "app/investor_list.html")
