@@ -4,7 +4,7 @@ from typing import assert_type
 from django import forms
 from django.test import TestCase
 
-from app.forms import AssetForm
+from app.forms import AssetForm, TradeForm
 from app.models import AssetType, Asset
 
 
@@ -53,3 +53,10 @@ class TestForms(TestCase):
         form = AssetForm(data=data)
 
         self.assertFalse(form.is_valid())
+
+    # --TradeForm--
+    def test_trade_form_with_valid_quantity(self):
+        data = {"quantity": 5}
+        form = TradeForm(data)
+
+        self.assertTrue(form.is_valid())
