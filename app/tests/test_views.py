@@ -210,3 +210,19 @@ class TestViews(TestCase):
             list(res.context['investors']),
         )
         self.assertTemplateUsed(res, "app/investor_list.html")
+
+    def test_investor_detail(self):
+        User = get_user_model()
+        investor = User.objects.create_superuser(
+            username="test_one",
+            email="tester@gmail.com",
+            password="test1234@",
+            balance=Decimal("12000.00"),
+        )
+
+        url = reverse("app:investor-detail", args=[investor.id])
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.context['investor'], investor)
+        self.assertTemplateUsed(res, "app/investor_detail.html")
