@@ -60,3 +60,9 @@ class TestForms(TestCase):
         form = TradeForm(data)
 
         self.assertTrue(form.is_valid())
+
+    def test_trade_form_with_invalid_quantity(self):
+        data = {"quantity": -1}
+        form = TradeForm(data)
+
+        self.assertFalse(form.is_valid())
