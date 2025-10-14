@@ -8,7 +8,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from app.forms import AssetTypeForm, AssetForm, InvestorForm
-from app.models import AssetType, Asset, Investor
+from app.models import AssetType, Asset, Investor, Order
 
 User = get_user_model()
 
@@ -280,3 +280,27 @@ class TestViews(TestCase):
 
         self.assertFalse(Investor.objects.filter(username='test_one').exists())
         self.assertRedirects(res, success_url, fetch_redirect_response=False)
+
+    def test_order_list(self):
+        type = AssetType.objects.create(name="Crypto")
+        asset = Asset.objects.create(name="Bitcoin", price=1200, type=type)
+        User = get_user_model()
+        investor = User.objects.create_superuser(
+            username="test_one",
+            email="tester@gmail.com",
+            password="test1234@",
+            balance=Decimal("12000.00"),
+        )
+        order_1 = Order.objects.create(asset=asset, quantity=2, investor=investor, side="Buy")
+        order_2 = Order.objects.create(asset=asset, quantity=1, investor=investor, side="Sell")
+        orders = Order.objects.all()
+
+        url = reverse("app:order-list")
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, "app/order_list.html")
+        self.assertEqual(
+            list(orders),
+            list(res.context['orders']),
+        )
