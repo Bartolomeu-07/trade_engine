@@ -43,3 +43,13 @@ class TestForms(TestCase):
         form = AssetForm(data=data)
 
         self.assertFalse(form.is_valid())
+
+    def test_asset_form_with_no_existing_asset_type(self):
+        data = {
+            "name": "USD/PLN",
+            "price": "4.34",
+            "type": 1,
+        }
+        form = AssetForm(data=data)
+
+        self.assertFalse(form.is_valid())
