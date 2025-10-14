@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from app.forms import AssetTypeForm
+from app.forms import AssetTypeForm, AssetForm
 from app.models import AssetType, Asset
 
 User = get_user_model()
@@ -123,3 +123,23 @@ class TestViews(TestCase):
 
         self.assertEqual(res.context['asset'], test_asset)
         self.assertTemplateUsed(res, "app/asset_detail.html")
+
+    def test_asset_create(self):
+        type = AssetType.objects.create(name="Stocks")
+
+        # GET method
+        url = reverse("app:asset-create")
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, 'app/asset_form.html')
+        self.assertIsInstance(res.context['form'], AssetForm)
+
+        # POST method
+        success_url = reverse("app:asset-list")
+        data = {"name": "Tesla", "price": 10001.01, "type": type.id}
+        res = self.client.post(url, data=data)
+
+        self.assertRedirects(res, success_url, fetch_redirect_response=False)
+        self.assertTrue(Asset.objects.filter(name='Tesla').exists())
+
