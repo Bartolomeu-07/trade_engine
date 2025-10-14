@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from app.forms import AssetTypeForm, AssetForm
+from app.forms import AssetTypeForm, AssetForm, InvestorForm
 from app.models import AssetType, Asset, Investor
 
 User = get_user_model()
@@ -226,3 +226,34 @@ class TestViews(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.context['investor'], investor)
         self.assertTemplateUsed(res, "app/investor_detail.html")
+
+    def test_investor_update(self):
+        User = get_user_model()
+        investor = User.objects.create_superuser(
+            username="test_one",
+            email="tester@gmail.com",
+            password="test1234@",
+            balance=Decimal("12000.00"),
+        )
+        url = reverse("app:investor-update", args=[investor.id])
+
+        # GET method
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, "app/investor_form.html")
+        self.assertIsInstance(res.context['form'], InvestorForm)
+
+        # POST method
+        success_url = reverse("app:investor-detail", args=[investor.id])
+        data = {
+            "balance": Decimal("5000.00"),
+            "password1": "ZAQ!2wsx1234",
+            "password2": "ZAQ!2wsx1234",
+        }
+        res = self.client.post(url, data)
+
+        self.assertRedirects(res, success_url, fetch_redirect_response=False)
+        investor.refresh_from_db()
+        self.assertEqual(investor.balance, data["balance"])
+        self.assertTrue(investor.check_password(data["password1"]))
