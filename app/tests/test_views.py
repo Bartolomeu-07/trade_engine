@@ -257,3 +257,26 @@ class TestViews(TestCase):
         investor.refresh_from_db()
         self.assertEqual(investor.balance, data["balance"])
         self.assertTrue(investor.check_password(data["password1"]))
+
+    def test_investor_delete(self):
+        User = get_user_model()
+        investor = User.objects.create_superuser(
+            username="test_one",
+            email="tester@gmail.com",
+            password="test1234@",
+            balance=Decimal("12000.00"),
+        )
+        url = reverse("app:investor-delete", args=[investor.id])
+
+        # GET method
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, "app/investor_delete.html")
+
+        # POST method
+        success_url = reverse("app:index")
+        res = self.client.post(url)
+
+        self.assertFalse(Investor.objects.filter(username='test_one').exists())
+        self.assertRedirects(res, success_url, fetch_redirect_response=False)
