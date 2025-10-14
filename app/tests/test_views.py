@@ -1,3 +1,4 @@
+from platform import processor
 from tkinter.font import names
 
 from django.contrib.auth import get_user_model
@@ -5,7 +6,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from app.forms import AssetTypeForm
-from app.models import AssetType
+from app.models import AssetType, Asset
 
 User = get_user_model()
 
@@ -94,4 +95,21 @@ class TestViews(TestCase):
         self.assertFalse(AssetType.objects.filter(name='Stocks').exists())
         self.assertRedirects(res, success_url, fetch_redirect_response=False)
 
+# --Asset--
+
+    def test_asset_list(self):
+        type= AssetType.objects.create(name="Stocks")
+        Asset.objects.create(name="Tesla", price=1001.20, type=type)
+        Asset.objects.create(name="Samsung", price=300.56, type=type)
+        assets = Asset.objects.all()
+
+        url = reverse("app:asset-list")
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(
+            list(assets),
+            list(res.context['assets']),
+        )
+        self.assertTemplateUsed(res, 'app/asset_list.html')
 
